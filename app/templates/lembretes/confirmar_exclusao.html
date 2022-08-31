@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Confirmar exclusão
+{% endblock titulo %}
+
+{% block conteudo %}
+
+<div class="card mb-3">
+  <div class="card-header">
+    Tem certeza que deseja excluir o lembrete abaixo?
+  </div>
+  <div class="card-body">
+    <h5 class="card-title"> {{ lembrete.titulo }} </h5>
+    <p class="card-text"> {{ lembrete.descricao }} </p>
+    <hr>
+    <form method="POST">
+      {% csrf_token %}
+      <button class="btn btn-danger" type="submit">Excluir</button>
+    </form>
+  </div>
+</div>
+
+{% endblock conteudo %}

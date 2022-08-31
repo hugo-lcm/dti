@@ -1,0 +1,33 @@
+{% extends 'base.html' %}  <!--herança de template-->
+{% load meus_filtros %}
+
+{% block titulo %}
+Cadastrar lembrete
+{% endblock titulo %}
+
+{% block conteudo %}
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>Título: </label>
+        {{ form_lembrete.titulo|addclass:'form-control' }}
+    </div>
+    <div class="form-group">
+        <label>Descrição: </label>
+        {{ form_lembrete.descricao|addclass:'form-control' }}
+    </div>
+    <div class="form-group">
+        <label>Data: </label>
+        {{ form_lembrete.data|addclass:'form-control' }}
+    </div>
+    <div class="form-group">
+        <label>Prioridade: </label>
+        {{ form_lembrete.prioridade|addclass:'form-control' }}
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Salvar">
+    </div>
+</form>
+
+{% endblock conteudo %}
