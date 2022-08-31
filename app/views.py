@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def listar_lembretes(request):
+    return render(request, 'lembretes/listar_lembretes.html')
