@@ -1,14 +1,19 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .forms import LembreteForm
-from .entidades.lembrete import Lembrete
-from .services import lembrete_service
+from django.contrib.auth.decorators import login_required
+from ..forms import LembreteForm
+from ..entidades.lembrete import Lembrete
+from ..services import lembrete_service
 
 
+# exibe o método apenas se o usuário estiver logado, se não, redireciona para página de login
+@login_required()
 def listar_lembretes(request):
-    lembretes = lembrete_service.listar_lembretes()
+    lembretes = lembrete_service.listar_lembretes(request.user)
     return render(request, 'lembretes/listar_lembretes.html', {'lembretes': lembretes})
 
 
+@login_required()
 def cadastrar_lembrete(request):
     if request.method == 'POST':
         # se o método for == POST, vai passar os dados da requisição para o formulário
@@ -19,8 +24,8 @@ def cadastrar_lembrete(request):
             descricao = form_lembrete.cleaned_data['descricao']
             data = form_lembrete.cleaned_data['data']
             prioridade = form_lembrete.cleaned_data['prioridade']
-            novo_lembrete = Lembrete(titulo=titulo, descricao=descricao,
-                                     data=data, prioridade=prioridade)
+            novo_lembrete = Lembrete(titulo=titulo, descricao=descricao, data=data,
+                                     prioridade=prioridade, usuario=request.user)
             # envia o objeto com os dados para o lembrete_service, que insere no BD
             lembrete_service.cadastrar_lembrete(novo_lembrete)
             return redirect('listar_lembretes')
@@ -30,9 +35,12 @@ def cadastrar_lembrete(request):
     return render(request, 'lembretes/form_lembrete.html', {'form_lembrete': form_lembrete})
 
 
+@login_required()
 def editar_lembrete(request, id):
     # armazena o lembrete que o usuário está buscando através do id
     lembrete_bd = lembrete_service.listar_lembrete_id(id)
+    if lembrete_bd.usuario != request.user:
+        return HttpResponse('Não permitido')
     # retorna form vazio quando clicamos na opção de editar
     form_lembrete = LembreteForm(request.POST or None, instance=lembrete_bd)
     if form_lembrete.is_valid():
@@ -40,16 +48,19 @@ def editar_lembrete(request, id):
         descricao = form_lembrete.cleaned_data['descricao']
         data = form_lembrete.cleaned_data['data']
         prioridade = form_lembrete.cleaned_data['prioridade']
-        novo_lembrete = Lembrete(titulo=titulo, descricao=descricao,
-                                 data=data, prioridade=prioridade)
+        novo_lembrete = Lembrete(titulo=titulo, descricao=descricao, data=data,
+                                 prioridade=prioridade, usuario=request.user)
         lembrete_service.editar_lembrete(lembrete_bd, novo_lembrete)
         return redirect('listar_lembretes')
 
     return render(request, 'lembretes/form_lembrete.html', {'form_lembrete': form_lembrete})
 
 
+@login_required()
 def excluir_lembrete(request, id):
     lembrete_bd = lembrete_service.listar_lembrete_id(id)
+    if lembrete_bd.usuario != request.user:
+        return HttpResponse('Não permitido')
     if request.method == 'POST':
         lembrete_service.excluir_lembrete(lembrete_bd)
         return redirect('listar_lembretes')

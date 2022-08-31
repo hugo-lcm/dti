@@ -1,11 +1,12 @@
 # arquivo para poder criar um objeto do tipo Lembrete com base nas infos capturadas pelo formulário
 
 class Lembrete():
-    def __init__(self, titulo, descricao, data, prioridade):
+    def __init__(self, titulo, descricao, data, prioridade, usuario):
         self.__titulo = titulo
         self.__descricao = descricao
         self.__data = data
         self.__prioridade = prioridade
+        self.__usuario = usuario
 
     # getters e setters
     @property
@@ -39,3 +40,11 @@ class Lembrete():
     @prioridade.setter
     def prioridade(self, prioridade):
         self.__prioridade = prioridade
+
+    @property
+    def usuario(self):
+        return self.__usuario
+
+    @usuario.setter
+    def usuario(self, usuario):
+        self.__usuario = usuario

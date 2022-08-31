@@ -3,13 +3,13 @@ from ..models import Lembrete
 
 
 def cadastrar_lembrete(lembrete):
-    Lembrete.objects.create(titulo=lembrete.titulo, descricao=lembrete.descricao,
-                            data=lembrete.data, prioridade=lembrete.prioridade)
+    Lembrete.objects.create(titulo=lembrete.titulo, descricao=lembrete.descricao, data=lembrete.data,
+                            prioridade=lembrete.prioridade, usuario=lembrete.usuario)
 
 
-def listar_lembretes():
+def listar_lembretes(usuario):
     # igual a select * from app_lembrete
-    return Lembrete.objects.all()
+    return Lembrete.objects.filter(usuario=usuario).all()
 
 
 def listar_lembrete_id(id):
