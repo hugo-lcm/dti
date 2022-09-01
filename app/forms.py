@@ -8,4 +8,5 @@ class LembreteForm(forms.ModelForm):
     class Meta:
         model = Lembrete
         exclude = ('usuario', )
-        fields = '__all__'  # todos os campos do models serão validados
+        # todos os campos do models serão validados, exceto o que foi passado no exclude
+        fields = '__all__'

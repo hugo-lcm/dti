@@ -4,40 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <title>
-      {% block titulo %}
-      {% endblock titulo %}
+        {% block titulo %}
+        {% endblock titulo %}
     </title>
     <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="/static/app/css/style.css">
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="https://www.dtidigital.com.br/wp-content/uploads/2019/12/logo-dti-branca.png" alt="" width="30"
-                 height="24" class="d-inline-block align-text-top">
-            Lembretes Manager
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="{% url 'listar_lembretes' %}">Home</a>
-            </div>
-            <div class="navbar-nav">
-                <a class="nav-link active" id="logout" aria-current="page" href="{% url 'deslogar_usuario' %}">Logout</a>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #419FAB;">
+    <a class="navbar-brand" href="{% url 'listar_lembretes' %}">
+        <img src="https://www.dtidigital.com.br/wp-content/uploads/2019/12/logo-dti-branca.png" alt=""
+             width="30" height="24" class="d-inline-block align-text-top">
+        Lembretes Manager
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            {% if request.user.is_authenticated %}
+                <!--se o usuario estiver deslogado, nao aparece os botões abaixo-->
+                <a class="nav-item nav-link active" href="{% url 'listar_lembretes' %}">Listar Lembretes</a>
+                <a class="nav-item nav-link active" href="{% url 'deslogar_usuario' %}">Logout</a>
+                {% endif %}
+            <a class="nav-item nav-link active" href="{% url 'cadastrar_usuario' %}">Cadastrar Usuário</a>
         </div>
     </div>
 </nav>
 
 <main class="container">
-  {% block conteudo %}
-  {% endblock conteudo %}
+    {% block conteudo %}
+    {% endblock conteudo %}
 </main>
 
 </body>
+
+
 </html>
