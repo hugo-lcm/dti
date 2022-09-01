@@ -64,3 +64,13 @@ Usuário  | Senha
 ------------- | -------------
 usuario1  | user1234
 usuario2  | user1234
+
+### Testes
+
+Para executar os testes basta digitar o comando:
+```
+python manage.py test
+```
+<div>
+ <img src="https://user-images.githubusercontent.com/74077027/187881214-8704b3e1-5340-44e1-ba03-f0d04c5c4ed2.png" width="650px">
+</div>
