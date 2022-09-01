@@ -9,7 +9,7 @@ def cadastrar_lembrete(lembrete):
 
 def listar_lembretes(usuario):
     # igual a select * from app_lembrete
-    return Lembrete.objects.filter(usuario=usuario).all()
+    return Lembrete.objects.filter(usuario=usuario).all().order_by('data')
 
 
 def listar_lembrete_id(id):

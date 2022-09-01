@@ -1,16 +1,20 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.template import loader
 from ..forms import LembreteForm
 from ..entidades.lembrete import Lembrete
 from ..services import lembrete_service
+from django import forms
+import datetime
 
 
 # exibe o método apenas se o usuário estiver logado, se não, redireciona para página de login
 @login_required()
 def listar_lembretes(request):
     lembretes = lembrete_service.listar_lembretes(request.user)
-    return render(request, 'lembretes/listar_lembretes.html', {'lembretes': lembretes})
+    template = loader.get_template('lembretes/listar_lembretes.html')
+    return HttpResponse(template.render({'lembretes': lembretes}, request))
 
 
 @login_required()
@@ -23,6 +27,8 @@ def cadastrar_lembrete(request):
             titulo = form_lembrete.cleaned_data['titulo']
             descricao = form_lembrete.cleaned_data['descricao']
             data = form_lembrete.cleaned_data['data']
+            # if data < datetime.date.today():
+            #     raise forms.ValidationError("The date cannot be in the past!")
             prioridade = form_lembrete.cleaned_data['prioridade']
             novo_lembrete = Lembrete(titulo=titulo, descricao=descricao, data=data,
                                      prioridade=prioridade, usuario=request.user)
