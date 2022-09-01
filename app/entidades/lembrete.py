@@ -1,6 +1,7 @@
-# arquivo para poder criar um objeto do tipo Lembrete com base nas infos capturadas pelo formulário
+# arquivo para poder criar um objeto do tipo Lembrete
 
-class Lembrete():
+class Lembrete:
+    # construtor
     def __init__(self, titulo, descricao, data, prioridade, usuario):
         self.__titulo = titulo
         self.__descricao = descricao

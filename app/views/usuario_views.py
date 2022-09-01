@@ -6,7 +6,7 @@ from django.contrib import messages
 
 def cadastrar_usuario(request):
     if request.method == 'POST':
-        # form padrão para cadastro e login de usuários
+        # form padrão do django para cadastro e login de usuários
         form_usuario = UserCreationForm(request.POST)
         if form_usuario.is_valid():
             form_usuario.save()

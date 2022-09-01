@@ -1,4 +1,4 @@
-# métodos para manipulação do banco de dados
+# métodos específicos para manipulação do banco de dados
 from ..models import Lembrete
 
 
@@ -8,7 +8,7 @@ def cadastrar_lembrete(lembrete):
 
 
 def listar_lembretes(usuario):
-    # igual a select * from app_lembrete
+    # igual a select * from app_lembrete order by data
     return Lembrete.objects.filter(usuario=usuario).all().order_by('data')
 
 

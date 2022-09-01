@@ -5,16 +5,13 @@ from django.template import loader
 from ..forms import LembreteForm
 from ..entidades.lembrete import Lembrete
 from ..services import lembrete_service
-from django import forms
-import datetime
 
 
-# exibe o método apenas se o usuário estiver logado, se não, redireciona para página de login
+# com login_required exibe o método apenas se o usuário estiver logado, se não, redireciona para página de login
 @login_required()
 def listar_lembretes(request):
     lembretes = lembrete_service.listar_lembretes(request.user)
-    template = loader.get_template('lembretes/listar_lembretes.html')
-    return HttpResponse(template.render({'lembretes': lembretes}, request))
+    return render(request, 'lembretes/listar_lembretes.html', {'lembretes': lembretes})
 
 
 @login_required()
@@ -23,12 +20,10 @@ def cadastrar_lembrete(request):
         # se o método for == POST, vai passar os dados da requisição para o formulário
         form_lembrete = LembreteForm(request.POST)
         if form_lembrete.is_valid():
-            # captura as infos que vierem do formulário
+            # captura as infos que vieram do formulário
             titulo = form_lembrete.cleaned_data['titulo']
             descricao = form_lembrete.cleaned_data['descricao']
             data = form_lembrete.cleaned_data['data']
-            # if data < datetime.date.today():
-            #     raise forms.ValidationError("The date cannot be in the past!")
             prioridade = form_lembrete.cleaned_data['prioridade']
             novo_lembrete = Lembrete(titulo=titulo, descricao=descricao, data=data,
                                      prioridade=prioridade, usuario=request.user)
@@ -45,9 +40,9 @@ def cadastrar_lembrete(request):
 def editar_lembrete(request, id):
     # armazena o lembrete que o usuário está buscando através do id
     lembrete_bd = lembrete_service.listar_lembrete_id(id)
+    # aviso caso o usuário tente editar um lembrete que ele nao tem acesso, através da url
     if lembrete_bd.usuario != request.user:
         return HttpResponse('Não permitido')
-    # retorna form vazio quando clicamos na opção de editar
     form_lembrete = LembreteForm(request.POST or None, instance=lembrete_bd)
     if form_lembrete.is_valid():
         titulo = form_lembrete.cleaned_data['titulo']
