@@ -11,7 +11,7 @@ Django e o SQLite para armazenar os dados.
 
 O sistema está hospedado no Heroku, sendo possível acessar através do link abaixo:
 ```
-link
+ https://lembretes-dti.herokuapp.com/
 ```
 Para rodar o sistema localmente é necessário ter o Python instalado se seguir os passos (no windows):
 
