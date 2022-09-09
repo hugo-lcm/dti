@@ -6,6 +6,7 @@ Cadastro de usuários
 {% endblock titulo %}
 
 {% block conteudo %}
+
 <form method="POST" class="formulario">
     {% csrf_token %}
 
@@ -26,6 +27,7 @@ Cadastro de usuários
     </div>
     <div class="form-group">
         <input type="submit" value="Cadastrar" class="btn btn-primary">
+        <a href="{% url 'logar_usuario' %}" class="btn btn-primary">Fazer login</a>
     </div>
 </form>
 
