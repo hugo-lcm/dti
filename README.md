@@ -19,7 +19,7 @@ Para rodar o sistema localmente é necessário ter o Python instalado e seguir o
 2. Na área de trabalho, crie uma pasta chamada "sistema_lembretes".
 3. Dentro da pasta criada, crie outra, dessa vez chamada "gerenciador_lembretes".
 4. Pegue os arquivos da pasta extraída no passo 1 e cole na pasta criada no passo 3.
-5. Dentro da pasta "gerenciador_tarefas" tem que estar assim agora:
+5. Dentro da pasta "gerenciador_lembretes" tem que estar assim agora:
 
 <div>
  <img src="https://user-images.githubusercontent.com/74077027/187872426-17fb04aa-da2d-4c58-8855-eba0b487a104.png" width="500px">
